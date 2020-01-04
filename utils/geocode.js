@@ -19,12 +19,7 @@ const geocode = ( address, callback) =>{
     })
 };
 
-geocode('12what', (error, data) =>{
-    console.log(chalk`{inverse.red Error: ${error}}`);
-    console.log(`Longitude: ${data.longitude}`);
-    console.log(`Latitude: ${data.latitude}`);
-    console.log(`Location: ${data.location}`);
-});
+module.exports = geocode;
 
 // Not so efficient way of doing the above task
 
