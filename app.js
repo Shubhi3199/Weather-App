@@ -1,25 +1,28 @@
 const chalk = require('chalk');
-const request = require('request');
 
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
+const command = process.argv[2];
 
-geocode('delhi', (error, data) =>{
-    if(error){
-        console.log(chalk`{inverse.red Error: ${error}}`);
-    }else{
-        console.log(`Data: ${data.location}`);
-    }
+if(!command){
+    console.log(`Pls provide an address`)
+}else {
+    geocode(`${command}`, (error, data) =>{
+        if(error){
+            console.log(chalk`{inverse.red Error: ${error}}`);
+        }else{
+            console.log(`Location: ${data.location}`);
+            forecast(data.latitude, data.longitude, (error, data) =>{
+                if(error){
+                    console.log(chalk`{inverse.red Error: ${error}}`);
+                }else{
+                    console.log(`the temperature currently is ${data.temperature} and wind speed is calculated to be ${data.windSpeed}`)
+                }
+            });
+        }
+    });
 
+}
 
-});
-forecast(37, -122, (error, data) =>{
-    if(error){
-        console.log(chalk`{inverse.red Error: ${error}}`);
-    }else{
-        console.log(`the temperature currently is ${data.temperature} and wind speed is calculated to be ${data.windSpeed}`)
-    }
-
-});
 
